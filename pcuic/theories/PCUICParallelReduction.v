@@ -739,18 +739,18 @@ Section ParallelReduction.
   Lemma pred1_refl_gen Γ Γ' t : pred1_ctx Γ Γ' -> pred1 Γ Γ' t t.
   Proof.
     revert Γ'.
-    unshelve einduction Γ, t using term_forall_ctx_list_ind;
+    induction Γ, t using term_forall_ctx_list_ind;
     intros;
       try solve [(apply pred_atom; reflexivity) || constructor; auto];
       try solve [try red in X; constructor; unfold All2_prop2_eq, All2_prop2, on_Trel in *; solve_all];
       intros.
-    - constructor; eauto. eapply IHt0_2.
+    - constructor; eauto. eapply IHt2.
       constructor; try red; eauto with pcuic.
-    - constructor; eauto. eapply IHt0_2.
+    - constructor; eauto. eapply IHt2.
       constructor; try red; eauto with pcuic.
-    - constructor; eauto. eapply IHt0_3.
+    - constructor; eauto. eapply IHt3.
       constructor; try red; eauto with pcuic.
-    - assert (All2_local_env (on_decl (fun Δ Δ' : context => pred1 (Γ0 ,,, Δ) (Γ' ,,, Δ')))
+    - assert (All2_local_env (on_decl (fun Δ Δ' : context => pred1 (Γ ,,, Δ) (Γ' ,,, Δ')))
                              (fix_context m) (fix_context m)).
       { revert X. clear -X1. generalize (fix_context m).
         intros c H1. induction H1; constructor; auto.
@@ -764,7 +764,7 @@ Section ParallelReduction.
       eapply All_All2; eauto. simpl; intros.
       split; eauto. eapply X3; auto.
       split. eapply X3. eapply All2_local_env_app_inv; auto. auto.
-    - assert (All2_local_env (on_decl (fun Δ Δ' : context => pred1 (Γ0 ,,, Δ) (Γ' ,,, Δ')))
+    - assert (All2_local_env (on_decl (fun Δ Δ' : context => pred1 (Γ ,,, Δ) (Γ' ,,, Δ')))
                              (fix_context m) (fix_context m)).
       { revert X. clear -X1. generalize (fix_context m).
         intros c H1. induction H1; constructor; auto.
